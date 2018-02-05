@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+// TODO: should test be changed to something else?
 mongoose.connect('mongodb://localhost/test');
 
 var db = mongoose.connection;
@@ -12,8 +13,8 @@ db.once('open', function() {
 });
 
 var itemSchema = mongoose.Schema({
-  quantity: Number,
-  description: String
+  mood: String,
+  timesSearched: Number
 });
 
 var Item = mongoose.model('Item', itemSchema);
@@ -27,5 +28,5 @@ var selectAll = function(callback) {
     }
   });
 };
-
+//TODO: probably need to either add more exports, or refactor to call thsi table somewhere else
 module.exports.selectAll = selectAll;
