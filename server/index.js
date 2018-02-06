@@ -28,7 +28,6 @@ app.get('/moods', function (req, res) {
 app.post('/moods', function(req, res){
   console.log('good job, you hit moods!');
   //req.body is json you want
-
   //add search to db, incremenet number if found
   moodHelper.createNew(req.body.query)
     .then((newMood) => {
