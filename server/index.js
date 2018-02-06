@@ -9,7 +9,7 @@ var app = express();
 app.use(bodyParser.json())
 app.use(express.static('angular-client'))
 
-const PORT = proccess.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 //used app.use(express.static... instead
 // app.get('/', function(req, res){
 //   res.redirect(path.join(__dirname, '../angular-client/index.html'));
