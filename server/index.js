@@ -6,8 +6,6 @@ var items = require('../database-mongo');
 
 var app = express();
 app.use(bodyParser.json())
-
-
 app.use(express.static('angular-client'))
 
 //used app.use(express.static... instead
@@ -26,10 +24,14 @@ app.get('/items', function (req, res) {
     }
   });
 });
-//
+
 app.post('/moods', function(req, res){
   console.log('good job, you hit moods!');
   //req.body is json you want
+
+  //add search to db, incremenet number if found
+
+  //change this to send back the sound data (after retrieving sound data, and after adding search to db)
   res.status(201).send(req.body);
   res.end();
 })

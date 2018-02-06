@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 // TODO: should test be changed to something else?
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/moosic');
 
 var db = mongoose.connection;
 
@@ -12,21 +12,32 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
-var itemSchema = mongoose.Schema({
-  mood: String,
-  timesSearched: Number
+// var itemSchema = mongoose.Schema({
+//   mood: String,
+//   timesSearched: Number
+// });
+
+// var Item = mongoose.model('Item', itemSchema);
+
+// var selectAll = function(callback) {
+//   Item.find({}, function(err, items) {
+//     if(err) {
+//       callback(err, null);
+//     } else {
+//       callback(null, items);
+//     }
+//   });
+// };
+
+const mongoose = require('mongoose');
+
+const moodSchema = mongoose.Schema({
+  query: String,
+  timeSearched: Number
 });
 
-var Item = mongoose.model('Item', itemSchema);
+const Mood = mongoose.model('Mood', moodSchema);
 
-var selectAll = function(callback) {
-  Item.find({}, function(err, items) {
-    if(err) {
-      callback(err, null);
-    } else {
-      callback(null, items);
-    }
-  });
-};
+
 //TODO: probably need to either add more exports, or refactor to call thsi table somewhere else
-module.exports.selectAll = selectAll;
+module.exports = Mood;
