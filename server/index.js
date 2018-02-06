@@ -11,6 +11,9 @@ var app = express();
 app.use(bodyParser.json())
 app.use(express.static('angular-client'))
 
+const clientId = process.env.CLIENTID || config.clientId;
+const userId = process.env.USERID || config.userId;
+
 const PORT = process.env.PORT || 3000;
 //used app.use(express.static... instead
 // app.get('/', function(req, res){
@@ -35,7 +38,7 @@ app.post('/moods', function(req, res){
 
  
 
-  axios.get(`https://c1339077868.web.cddbp.net/webapi/json/1.0/radio/create?genre=36065&genre=36054&client=${config.clientId}&user=${config.userId}`,
+  axios.get(`https://c1339077868.web.cddbp.net/webapi/json/1.0/radio/create?genre=36065&genre=36054&client=${clientId}&user=${userId}`,
   {
     // params: queryString.stringify({ 
     //   // genre: '36065',
