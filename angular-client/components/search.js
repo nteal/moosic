@@ -24,8 +24,7 @@ angular.module('app')
         data: {query: newMood},
       })
       .then((moodObj) => {
-          console.log('your new url is: ', searchComp.url+moodObj.data);
-          searchComp.url = searchComp.url+moodObj.data;
+        searchComp.url = 'https://www.youtube.com/watch?v='+moodObj.data;
       })
       .catch((err) => {
         console.log('ya hit an err in http request in search.js', err);
