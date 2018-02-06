@@ -32,7 +32,7 @@ db.once('open', function() {
 
 const moodSchema = mongoose.Schema({
   query: String,
-  timeSearched: Number
+  timesSearched: Number
 });
 
 const Mood = mongoose.model('Mood', moodSchema);

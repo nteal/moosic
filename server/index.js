@@ -16,7 +16,7 @@ app.use(express.static('angular-client'))
 //   res.end();
 // })
 
-app.get('/mood', function (req, res) {
+app.get('/moods', function (req, res) {
   mood.find()
   .then((allMoods) => {
     res.header(200).send(moodHelper.sortByTimesSearched(allMoods).slice(0, 5));
