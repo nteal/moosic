@@ -30,7 +30,7 @@ const addObjToSorted = (sortedArr, moodObj) => {
 
   for(i = 0; i < sortedArr.length; i++){
     if(moodObj.timesSearched > sortedArr[i].timesSearched){
-      return sortedArr.slice(0, i).concat(modelToObj).concat(sortedArr.slice(i));
+      return sortedArr.slice(0, i).concat(moodObj).concat(sortedArr.slice(i));
     } else if(i === sortedArr.length - 1){
       return sortedArr.concat(moodObj);
     }
