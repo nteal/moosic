@@ -17,6 +17,8 @@ angular.module('app')
         //moodObj should be music object (of some sort)
         //TODO: do something you're supposed to with music object....
           //render to player tags?
+
+          console.log('your mood object is: ', moodObj);
       }).catch((err) => {
         console.log('ya hit an err in http request in search.js');
       })
