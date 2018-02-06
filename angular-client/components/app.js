@@ -6,6 +6,7 @@ angular.module('app')
 })
 .component('app', {
   bindings: {},
-  controller: 'AppCtrl',
+  // probably need to add folowing line:
+  // controller: 'AppCtrl',
   templateUrl: '/templates/app.html'
 });

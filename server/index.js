@@ -1,9 +1,21 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+const path = require('path');
 
 var items = require('../database-mongo');
 
 var app = express();
+app.use(bodyParser.json())
+
+
+app.use(express.static('angular-client'))
+
+//used app.use(express.static... instead
+// app.get('/', function(req, res){
+//   res.redirect(path.join(__dirname, '../angular-client/index.html'));
+//   // res.redirect(path.join(__dirname, '../angular-client/index.html'));
+//   res.end();
+// })
 
 app.get('/items', function (req, res) {
   items.selectAll(function(err, data) {
@@ -14,6 +26,13 @@ app.get('/items', function (req, res) {
     }
   });
 });
+//
+app.post('/moods', function(req, res){
+  console.log('good job, you hit moods!');
+  //req.body is json you want
+  res.status(201).send(req.body);
+  res.end();
+})
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');
