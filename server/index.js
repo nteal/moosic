@@ -5,7 +5,7 @@ const axios = require('axios');
 const queryString = require('query-string');
 var mood = require('../database-mongo/index');
 var moodHelper = require('../database-mongo/moodHelper');
-//const config = require('../config');
+const config = require('../config');
 
 var app = express();
 app.use(bodyParser.json())
@@ -13,6 +13,7 @@ app.use(express.static('angular-client'))
 
 const clientId = process.env.CLIENTID || config.clientId;
 const userId = process.env.USERID || config.userId;
+const googleKey = process.env.GOOGLEKEY || config.googleKey;
 
 const PORT = process.env.PORT || 3000;
 //used app.use(express.static... instead
@@ -31,39 +32,61 @@ app.get('/moods', function (req, res) {
 });
 
 
+// app.get('/vids', function(req, res) {
+//   axios.get('')
+//   .then((youtubeData) => {
+//     console.log(youtubeData);
+//     res.headder(200).send(youtubeData);
+//   })
+//   .catch((err) => {console.log('you got an err in your get vids: ', err)});
+// })
+
 app.post('/moods', function(req, res){
   console.log('good job, you hit moods!');
   //req.body.query is mood string]
     //need to convert it to correct code
 
- 
+  const testData = config.fakeData.RESPONSE[0].ALBUM[0];
+  const testArtist = testData.ARTIST[0].VALUE;
+  const testTitle = testData.TITLE[0].VALUE;
+  console.log(testTitle + testArtist);
+  axios.get(`https://www.googleapis.com/youtube/v3/search?q=cute dogs&key=${googleKey}&part=snippet`)
+  .then((youtubeData) => {
+    console.log(youtubeData);
+    const videoId = youtubeData.data.items[0].id.videoId;
+    console.log('your new url is: ', videoId);
+    res.header(200).send(videoId);
+  })
+  .catch((err) => {console.log('you got an err in your get vids: ', err)});
+  // res.header(200).send(testTitle + testArtist);
 
-  axios.get(`https://c1339077868.web.cddbp.net/webapi/json/1.0/radio/create?genre=36065&genre=36054&client=${clientId}&user=${userId}`,
-  {
-    // params: queryString.stringify({ 
-    //   // genre: '36065',
-    //   genre: [ '36065', '36054', '36056', '36063' ],
-    //  client: config.clientId,
-    //  user: config.userId}),
-  }).then((response) => {
-      console.log('your response is: ', response);
-      const useableBody = response.data;
-      const radioId = useableBody.RESPONSE[0].RADIO[0].ID
-      console.log('the body in your new request is: ', useableBody);
-      console.log('your new radio id should be...: ',radioId);
+  // axios.get(`https://c1339077868.web.cddbp.net/webapi/json/1.0/radio/create?genre=36065&genre=36054&client=${clientId}&user=${userId}`,
+  // {
+  // }).then((response) => {
+  //   console.log('your response is: ', response);
+  //   const musicResponse = response.data;
+  //   const radioId = musicResponse.RESPONSE[0].RADIO[0].ID;
+  //   axios.get(`https://c1339077868.web.cddbp.net/webapi/json/1.0/radio/setting?radio_id=${radioId}&filter_mood=42949&client=${clientId}&user=${userId}`)
+  //   .then((moodStation) => {
+  //     const moodMusicResponse = moodStation.data;
+  //     console.log('the body in your mood request is: ', moodMusicResponse);
+  //     const moodMusicAlbum = moodMusicResponse.RESPONSE[0].ALBUM;
+      
+  //     //PUT YOUR YOUTUBE CALL HERE
+  //     moodHelper.createNew(req.body.query)
+  //     .then((newMood) => {
+  //       res.status(201).send(moodMusicAlbum);
+  //       res.end();
+  //     })
+  //     .catch((err) => {
+  //       console.log('yah hit an err trying to post to /moods: ', err);
+  //     });
 
+  //   })
+  //   .catch((err) => {console.log('ya hit an error trying to get the mood station', err)});
 
-      moodHelper.createNew(req.body.query)
-      .then((newMood) => {
-        res.status(201).send(radioId);
-        res.end();
-      })
-      .catch((err) => {
-        console.log('yah hit an err trying to post to /moods: ', err);
-      });
-
-    })
-    .catch((err) => {console.log('error in axios', err)});
+  //   })
+  //   .catch((err) => {console.log('error in axios', err)});
 
   
 });
