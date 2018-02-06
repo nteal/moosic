@@ -6,7 +6,7 @@ exports.createNew = function(query){
   return Mood.findOneAndUpdate({query: query}, { $inc: { timesSearched: 1}})
     .then((found) => {
       if(!found){
-        const newMood = new Mood({query: query, timesSearched: 0})
+        const newMood = new Mood({query: query, timesSearched: 0});
         return newMood.save(function(err){
           if(err){
             console.log('ya hit an error trying to actually make a new mood: ', err);
@@ -37,7 +37,7 @@ const addObjToSorted = (sortedArr, moodObj) => {
   }
 }
 
-const sortByTimesSearched = (arrOfObjs) => {
+exports.sortByTimesSearched = (arrOfObjs) => {
   let sorted = [];
   arrOfObjs.forEach(mood => {
     sorted = addObjToSorted(sorted, mood);

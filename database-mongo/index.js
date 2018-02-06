@@ -29,7 +29,6 @@ db.once('open', function() {
 //   });
 // };
 
-const mongoose = require('mongoose');
 
 const moodSchema = mongoose.Schema({
   query: String,
