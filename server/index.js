@@ -42,7 +42,7 @@ app.post('/moods', function(req, res){
 
 })
 
-app.listen(3000, function() {
+app.listen(PORT, function() {
   console.log('listening on port 3000!');
 });
 
