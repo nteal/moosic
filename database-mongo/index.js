@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 // TODO: should test be changed to something else?
-mongoose.connect('mongodb://localhost/moosic');
+const connect = process.env.MONGODB_URI || 'mongodb://localhost/moosic'
+
+mongoose.connect(connect);
 
 var db = mongoose.connection;
 
