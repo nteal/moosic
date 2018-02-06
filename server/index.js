@@ -5,7 +5,7 @@ const axios = require('axios');
 const queryString = require('query-string');
 var mood = require('../database-mongo/index');
 var moodHelper = require('../database-mongo/moodHelper');
-// const config = require('../config');
+// const config = require('../config')
 
 var app = express();
 app.use(bodyParser.json())
