@@ -5,7 +5,7 @@ angular.module('app')
   },
   controller: function($http, $sce) {
     // this.url='https://www.youtube.com/watch?v=';
-    this.url= $sce.trustAsResourceUrl('https://www.youtube.com/embed/');
+    this.url= $sce.trustAsResourceUrl('https://www.youtube.com/embed/otnyM9RJG4o');
 
     this.getUrl = function(){
       const searchComp = this;

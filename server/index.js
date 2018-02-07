@@ -5,7 +5,7 @@ const axios = require('axios');
 const queryString = require('query-string');
 var mood = require('../database-mongo/index');
 var moodHelper = require('../database-mongo/moodHelper');
-const config = require('../config')
+// const config = require('../config')
 
 var app = express();
 app.use(bodyParser.json())
@@ -79,7 +79,7 @@ app.post('/moods', function(req, res){
         //randomize which youtube video to watch:
         const videoItems = youtubeData.data.items;
         const randomChoice = Math.floor(Math.random() * videoItems.length);
-        const videoId = videoItems[randomChoice].id.videoId || videoItems[randomChoice].id.playlistId;
+        const videoId = videoItems[randomChoice].id.videoId || videoItems[randomChoice  ].id.playlistId;
         console.log('your new url is: ', videoId);
         // res.header(200).send(videoId);
         moodHelper.createNew(req.body.query)
