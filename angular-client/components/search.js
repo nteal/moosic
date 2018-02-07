@@ -3,13 +3,19 @@ angular.module('app')
   bindings: {
     // items: '<',
   },
-  controller: function($http) {
-    this.url='https://www.youtube.com/watch?v=';
-    // this.url='https://www.youtube.com/embed/';
+  controller: function($http, $sce) {
+    // this.url='https://www.youtube.com/watch?v=';
+    this.url= $sce.trustAsResourceUrl('https://www.youtube.com/embed/');
 
     this.getUrl = function(){
-      return $sce.trustAsHtml(`<iframe src=${this.url}></iframe>`);
+      const searchComp = this;
+      return  $sce.getTrustedResourceUrl(searchComp.url);
     };
+
+    this.player = function(url){
+      $sce.trustAsResourceUrl(url)
+    }
+    
 
     this.log = function() {
       let searchComp = this;
@@ -24,7 +30,7 @@ angular.module('app')
         data: {query: newMood},
       })
       .then((moodObj) => {
-        searchComp.url = 'https://www.youtube.com/watch?v='+moodObj.data;
+        searchComp.url = $sce.trustAsResourceUrl(`https://www.youtube.com/embed/${moodObj.data}`);
       })
       .catch((err) => {
         console.log('ya hit an err in http request in search.js', err);

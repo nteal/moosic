@@ -5,7 +5,7 @@ const axios = require('axios');
 const queryString = require('query-string');
 var mood = require('../database-mongo/index');
 var moodHelper = require('../database-mongo/moodHelper');
-// const config = require('../config')
+const config = require('../config')
 
 var app = express();
 app.use(bodyParser.json())
@@ -50,6 +50,8 @@ app.post('/moods', function(req, res){
       moodFilter = '42960';
     } else if (query === 'upbeat') {
       moodFilter = '65333';
+    } else {
+      moodFilter = '42946';
     }
     const musicResponse = response.data;
     const radioId = musicResponse.RESPONSE[0].RADIO[0].ID;
@@ -57,7 +59,9 @@ app.post('/moods', function(req, res){
     .then((moodStation) => {
       const moodMusicResponse = moodStation.data;
       console.log('the body in your mood request is: ', moodMusicResponse);
-      const moodMusicAlbum = moodMusicResponse.RESPONSE[0].ALBUM[0];
+      const album = moodMusicResponse.RESPONSE[0].ALBUM
+      const albumChoice = Math.floor(Math.random() * album.length);
+      const moodMusicAlbum = album[albumChoice];
       
       //PUT YOUR YOUTUBE CALL HERE
 
@@ -72,7 +76,10 @@ app.post('/moods', function(req, res){
       axios.get(`https://www.googleapis.com/youtube/v3/search?q=${moodSearch}&key=${googleKey}&part=snippet`)
       .then((youtubeData) => {
         console.log('yourube data is: ', youtubeData);
-        const videoId = youtubeData.data.items[0].id.videoId;
+        //randomize which youtube video to watch:
+        const videoItems = youtubeData.data.items;
+        const randomChoice = Math.floor(Math.random() * videoItems.length);
+        const videoId = videoItems[randomChoice].id.videoId || videoItems[randomChoice].id.playlistId;
         console.log('your new url is: ', videoId);
         // res.header(200).send(videoId);
         moodHelper.createNew(req.body.query)
